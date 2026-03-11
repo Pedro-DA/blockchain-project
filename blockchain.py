@@ -92,5 +92,29 @@ def new_transaction():
     response={"message":f"Transaction will be added to Block{index}"}
     return jsonify(response), 201
 
+@app.route("/mine", methods=["GET"])
+def mine():
+    lastBlock=blockchain.lastBlock
+    lastProof=lastBlock["proof"]
+    proof=blockchain.proofOfWork(lastProof)
+
+    blockchain.newTransaction(
+        sender="0",
+        recipient=nodeIdentifier,
+        amount=1,
+    )
+
+    previousHash=blockchain.hash(lastBlock)
+    block=blockchain.newBlock(proof,previousHash)
+
+    response={
+        "message":"New Block Forged",
+        "index":block["index"],
+        "transaction":block["transaction"],
+        "proof":block["proof"],
+        "previousHash":block["previousHash"],
+    }
+    return jsonify(response), 200
+
 if __name__ == "__main__":
     app.run(host="0.0.0.0", port=5000)
