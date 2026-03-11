@@ -52,7 +52,7 @@ class Blockchain(object):
         return proof
     
     @staticmethod
-    def validMethod(lastProof,proof):
+    def validProof(lastProof,proof):
         guess = f"{lastProof}{proof}".encode()
         guessHash = hashlib.sha256(guess).hexdigest()
         return guessHash[:4]=="0000"
