@@ -63,14 +63,6 @@ nodeIdentifier = str(uuid4()).replace("-","")
 
 blockchain = Blockchain()
 
-@app.route("/mine", methods=["GET"])
-def mine():
-    return "We'll mine a new block"
-
-@app.route("/transactions/new",methods=["POST"])
-def newTransaction():
-    return "We'll add a new transaction"
-
 @app.route("/chain",methods=["GET"])
 def fullChain():
     response={
